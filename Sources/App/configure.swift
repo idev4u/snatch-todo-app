@@ -18,8 +18,8 @@ public func configure(
     // Configure the socket
     var host:String?
     var port:Int?
-    if (ProcessInfo.processInfo.environment["HOST"] != nil) {
-        host = ProcessInfo.processInfo.environment["HOST"] ?? "0.0.0.0"
+    if (ProcessInfo.processInfo.environment["VCAP_APP_HOST"] != nil) {
+        host = ProcessInfo.processInfo.environment["VCAP_APP_HOST"] ?? "0.0.0.0"
     }
     if (ProcessInfo.processInfo.environment["PORT"] != nil) {
         port = Int(ProcessInfo.processInfo.environment["PORT"]!) ?? 8080
@@ -66,6 +66,7 @@ public func configure(
                                               database: psqldatabase!,
                                               password: psqlpassword!
                                              )
+
 //    services.register(psqlConfig)
     let psql = PostgreSQLDatabase(config: psqlConfig)
     var databases = DatabaseConfig()
