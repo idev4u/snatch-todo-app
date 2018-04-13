@@ -1,0 +1,5 @@
+.build/*
+Packages/*
+/*.xcodeproj
+Docs/*
+*.md
