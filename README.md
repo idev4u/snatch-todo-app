@@ -101,6 +101,10 @@ HTTP 200
 
 ## cf setup
 
+### prerequisite
+you need a Postgres DB accessible from anywhere. (e.q. https://console.bluemix.net/catalog/services/elephantsql) or your own.
+Then provide the credentials as environment variables for your app, in my case it is for `snatch-todo`
+
 ```
 cf set-env snatch-todos PSQLHOSTNAME "packy.db.elephantsql.com"
 cf set-env snatch-todos PSQLPORT 5432
@@ -110,12 +114,11 @@ cf set-env snatch-todos PSQLPASSWORD "*****"
 ```
 deploy in cf
 
-this is the custom command to deploy vapor 3 to cloudfoundry, the build pack is necessary, because we need defently swift 4.1!
+this is the custom command to deploy vapor 3 to cloudfoundry, the build pack is necessary, because we need definitely swift 4.1! 
 
 ```shell
 cf push snatch-todos 32M -c Run -b https://github.com/IBM-Swift/swift-buildpack/releases/download/2.0.11/buildpack_swift_v2.0.11-20180402-2018.zip
 ```
-
 
 verify after the deploy (I had deployed in london)
 ```shell
