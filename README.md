@@ -61,7 +61,7 @@ payload
 ````
 Example call to create a new task on the todo list
 ```
-curl -X POST  http://localhost:8080/todos/task/add -d '{ "task" : "your todo task", "status": false }' -H 'Content-Type: application/json'
+bash$ curl -X POST  http://localhost:8080/todos/task/add -d '{ "task" : "your todo task", "status": false }' -H 'Content-Type: application/json'
 ```
 Response
 ```
@@ -81,7 +81,7 @@ Payload
 
 Example call to check-off a task on the todo list
 ```
-curl -X PUT  http://localhost:8080/todos/task/check-off -d '{"id":1,"task":"my first todo","status":true}' -H 'Content-Type: application/json'
+bash$ curl -X PUT  http://localhost:8080/todos/task/check-off -d '{"id":1,"task":"my first todo","status":true}' -H 'Content-Type: application/json'
 ```
 
 Response
@@ -93,7 +93,7 @@ Response
 
 Example call to delete a task from the todo list
 ```
-curl -iv -X DELETE  http://localhost:8080/todos/task/delete/4
+bash$ curl -iv -X DELETE  http://localhost:8080/todos/task/delete/4
 ```
 
 Response
@@ -108,11 +108,11 @@ You need a Postgres Database accessible from anywhere. (e.q. https://console.blu
 Then provide the credentials to the cf runtime as environment variables with `cf set-env`, in my case it is for `snatch-todo` environment.
 
 ```
-cf set-env snatch-todos PSQLHOSTNAME "packy.db.elephantsql.com"
-cf set-env snatch-todos PSQLPORT 5432
-cf set-env snatch-todos PSQLUSERNAME "xxxxx"
-cf set-env snatch-todos PSQLDATABASE "xxxxx"
-cf set-env snatch-todos PSQLPASSWORD "*****"
+bash$ cf set-env snatch-todos PSQLHOSTNAME "packy.db.elephantsql.com"
+bash$ cf set-env snatch-todos PSQLPORT 5432
+bash$ cf set-env snatch-todos PSQLUSERNAME "xxxxx"
+bash$ cf set-env snatch-todos PSQLDATABASE "xxxxx"
+bash$ cf set-env snatch-todos PSQLPASSWORD "*****"
 ```
 ### Deploy in cf
 
@@ -120,23 +120,23 @@ This is the custom command to deploy vapor 3 to cloudfoundry, the build pack is 
 !! Be sure that you are connected to your cloud foundry 
 
 ```shell
-cf push snatch-todos 32M -c Run -b https://github.com/IBM-Swift/swift-buildpack/releases/download/2.0.11/buildpack_swift_v2.0.11-20180402-2018.zip
+bash$ cf push snatch-todos 32M -c Run -b https://github.com/IBM-Swift/swift-buildpack/releases/download/2.0.11/buildpack_swift_v2.0.11-20180402-2018.zip
 ```
 
 Verify after the deploy (I had deployed in london)
 ```shell
-curl -iv snatch-todos.eu-gb.mybluemix.net/todos
+bash$ curl -iv snatch-todos.eu-gb.mybluemix.net/todos
 ```
 ```shell
-curl -iv -X POST  http://snatch-todos.eu-gb.mybluemix.net/todos/task/add \
+bash$ curl -iv -X POST  http://snatch-todos.eu-gb.mybluemix.net/todos/task/add \
 -d '{ "task" : "your todo task", "status": false }' \
 -H 'Content-Type: application/json'
 ```
 ```shell
-curl -iv -X PUT  http://snatch-todos.eu-gb.mybluemix.net/todos/task/check-off \
+bash$ curl -iv -X PUT  http://snatch-todos.eu-gb.mybluemix.net/todos/task/check-off \
 -d '{"id":1,"task":"my first todo","status":true}' \
 -H 'Content-Type: application/json'
 ```
 ```shell
-curl -iv -X DELETE  http://snatch-todos.eu-gb.mybluemix.net/todos/task/delete/11
+bash$ curl -iv -X DELETE  http://snatch-todos.eu-gb.mybluemix.net/todos/task/delete/11
 ```
