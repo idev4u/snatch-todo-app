@@ -1,10 +1,11 @@
-# TODO App Vapor 3
+# Snatch Todo Backend  
 
-Goal this should help me to demo cloud foundry swift runtime on the IBM Cloud meetup.
+## Goal
+This example "*todo backend*" should help me to demo the **swift runtime** for cloud foundry. I would like show the latest stuff for swift, that's the reason why I choose **vapor 3** with **swift NIO**. 
 
-## run on your machine
-### prerequisite
-get it on your local machine and build it.
+## Run it on your local machine
+### Prerequisite
+Get it on your local machine and build it.
 ```shell
 bash$ git  clone ...
 bash$ cd snatch-todo-app
@@ -22,10 +23,9 @@ host    all             all             0.0.0.0/0               password
 host    all             all             ::1/128                 password
 ```
 
-**local setup**
+**Local setup**
 
 ```shell
-# Postgresql Setup
 # Postgresql Setup
 export PSQLHOSTNAME="localhost"
 export PSQLPORT=5432
@@ -36,7 +36,7 @@ export PSQLPASSWORD="******"
 export VCAP_APP_HOST="0.0.0.0"
 export PORT=8080
 ```
-run it
+Run it
 ```shell
 bash$ .build/x86_64-apple-macosx10.10/debug/Run
 [ INFO ] Migrating 'psql' database (FluentProvider.swift:28)
@@ -44,13 +44,13 @@ bash$ .build/x86_64-apple-macosx10.10/debug/Run
 Server starting on http://0.0.0.0:8080
 ```
 
-## how it works
+## How it works
 
-### api calls
+### Api calls
 
 Add a todo task
 
-/todos/task/add
+/todos/task/add  
 payload
 ```json
 {
@@ -59,7 +59,7 @@ payload
   "status":false
 }
 ````
-example call
+Example call to create a new task on the todo list
 ```
 curl -X POST  http://localhost:8080/todos/task/add -d '{ "task" : "your todo task", "status": false }' -H 'Content-Type: application/json'
 ```
@@ -69,8 +69,8 @@ Response
 
 ```
 
-/todos/task/check-off
-payload
+/todos/task/check-off  
+Payload
 ```json
 {
   "id":1,
@@ -79,7 +79,7 @@ payload
 }
 ````
 
-example call
+Example call to check-off a task on the todo list
 ```
 curl -X PUT  http://localhost:8080/todos/task/check-off -d '{"id":1,"task":"my first todo","status":true}' -H 'Content-Type: application/json'
 ```
@@ -90,6 +90,8 @@ Response
 ```
 
 /todos/task/delete/:id
+
+Example call to delete a task from the todo list
 ```
 curl -iv -X DELETE  http://localhost:8080/todos/task/delete/4
 ```
@@ -99,11 +101,11 @@ Response
 HTTP 200
 ```
 
-## cf setup
+## Cloud Foundry setup
 
-### prerequisite
-you need a Postgres DB accessible from anywhere. (e.q. https://console.bluemix.net/catalog/services/elephantsql) or your own.
-Then provide the credentials as environment variables for your app, in my case it is for `snatch-todo`
+### Prerequisite
+You need a Postgres Database accessible from anywhere. (e.q. https://console.bluemix.net/catalog/services/elephantsql or your own). And be sure that you are connected to your cloud foundry provider, I have used IBM Cloud Foundry.
+Then provide the credentials to the cf runtime as environment variables with `cf set-env`, in my case it is for `snatch-todo` environment.
 
 ```
 cf set-env snatch-todos PSQLHOSTNAME "packy.db.elephantsql.com"
@@ -112,15 +114,16 @@ cf set-env snatch-todos PSQLUSERNAME "xxxxx"
 cf set-env snatch-todos PSQLDATABASE "xxxxx"
 cf set-env snatch-todos PSQLPASSWORD "*****"
 ```
-deploy in cf
+### Deploy in cf
 
-this is the custom command to deploy vapor 3 to cloudfoundry, the build pack is necessary, because we need definitely swift 4.1! 
+This is the custom command to deploy vapor 3 to cloudfoundry, the build pack is necessary, because we need definitely swift 4.1! 
+!! Be sure that you are connected to your cloud foundry 
 
 ```shell
 cf push snatch-todos 32M -c Run -b https://github.com/IBM-Swift/swift-buildpack/releases/download/2.0.11/buildpack_swift_v2.0.11-20180402-2018.zip
 ```
 
-verify after the deploy (I had deployed in london)
+Verify after the deploy (I had deployed in london)
 ```shell
     curl -iv snatch-todos.eu-gb.mybluemix.net/todos
 
