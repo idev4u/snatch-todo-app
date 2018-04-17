@@ -10,18 +10,30 @@ bash$ git  clone ...
 bash$ cd snatch-todo-app
 bash$ swift build
 ```
+you need a running psql with this settings in your `pg_hba.conf`config file.
+
+```
+# "local" is for Unix domain socket connections only
+local   all             all                                     password
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            password
+host    all             all             0.0.0.0/0               password
+# IPv6 local connections:
+host    all             all             ::1/128                 password
+```
 
 **local setup**
 
 ```shell
 # Postgresql Setup
-export PSQLHOSTNAME="packy.db.elephantsql.com"
+# Postgresql Setup
+export PSQLHOSTNAME="localhost"
 export PSQLPORT=5432
-export PSQLUSERNAME="xxxxx"
-export PSQLDATABASE="xxxxx"
+export PSQLUSERNAME="turkish"
+export PSQLDATABASE="turkish"
 export PSQLPASSWORD="******"
 #Server Setup
-export HOST="0.0.0.0"
+export VCAP_APP_HOST="0.0.0.0"
 export PORT=8080
 ```
 run it
