@@ -125,15 +125,18 @@ cf push snatch-todos 32M -c Run -b https://github.com/IBM-Swift/swift-buildpack/
 
 Verify after the deploy (I had deployed in london)
 ```shell
-    curl -iv snatch-todos.eu-gb.mybluemix.net/todos
-
-    curl -iv -X POST  http://snatch-todos.eu-gb.mybluemix.net/todos/task/add \
-    -d '{ "task" : "your todo task", "status": false }' \
-    -H 'Content-Type: application/json'
-
-    curl -iv -X PUT  http://snatch-todos.eu-gb.mybluemix.net/todos/task/check-off \
-    -d '{"id":1,"task":"my first todo","status":true}' \
-    -H 'Content-Type: application/json'
-
-    curl -iv -X DELETE  http://snatch-todos.eu-gb.mybluemix.net/todos/task/delete/11
+curl -iv snatch-todos.eu-gb.mybluemix.net/todos
+```
+```shell
+curl -iv -X POST  http://snatch-todos.eu-gb.mybluemix.net/todos/task/add \
+-d '{ "task" : "your todo task", "status": false }' \
+-H 'Content-Type: application/json'
+```
+```shell
+curl -iv -X PUT  http://snatch-todos.eu-gb.mybluemix.net/todos/task/check-off \
+-d '{"id":1,"task":"my first todo","status":true}' \
+-H 'Content-Type: application/json'
+```
+```shell
+curl -iv -X DELETE  http://snatch-todos.eu-gb.mybluemix.net/todos/task/delete/11
 ```
