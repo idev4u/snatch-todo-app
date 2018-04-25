@@ -16,15 +16,10 @@ public func configure(
     
 //    print(ProcessInfo.processInfo.environment.debugDescription)
     // Configure the socket
-    var host:String?
-    var port:Int?
-    if (ProcessInfo.processInfo.environment["VCAP_APP_HOST"] != nil) {
-        host = ProcessInfo.processInfo.environment["VCAP_APP_HOST"] ?? "0.0.0.0"
-    }
-    if (ProcessInfo.processInfo.environment["PORT"] != nil) {
-        port = Int(ProcessInfo.processInfo.environment["PORT"]!) ?? 8080
-    }
-    let server = EngineServerConfig.default(hostname: host!, port: port!)
+    let host = ProcessInfo.processInfo.environment["VCAP_APP_HOST"] ?? "0.0.0.0"
+    let port = ProcessInfo.processInfo.environment["PORT"] ?? "8080"
+    
+    let server = EngineServerConfig.default(hostname: host, port: Int(port)!)
     services.register(server)
     
     /// Register routes to the router
@@ -40,31 +35,22 @@ public func configure(
     
     // Configure a PostgreSQL database
     /// Register custom PostgreSQL Config
-    var psqlhost:String?
+ 
+    let psqlhost = ProcessInfo.processInfo.environment["PSQLHOSTNAME"] ?? "localhost"
     var psqlport:Int?
-    var psqluser:String?
-    var psqlpassword:String?
-    var psqldatabase:String?
-    if (ProcessInfo.processInfo.environment["PSQLHOSTNAME"] != nil) {
-        psqlhost = ProcessInfo.processInfo.environment["PSQLHOSTNAME"] ?? "localhost"
-    }
     if (ProcessInfo.processInfo.environment["PSQLPORT"] != nil) {
-        psqlport = Int(ProcessInfo.processInfo.environment["PSQLPORT"]!) ?? 5432
+        psqlport = Int(ProcessInfo.processInfo.environment["PSQLPORT"]!)
+    } else {
+        psqlport = 5432
     }
-    if (ProcessInfo.processInfo.environment["PSQLUSERNAME"] != nil) {
-        psqluser = ProcessInfo.processInfo.environment["PSQLUSERNAME"] ?? "unknown"
-    }
-    if (ProcessInfo.processInfo.environment["PSQLPASSWORD"] != nil) {
-        psqlpassword = ProcessInfo.processInfo.environment["PSQLPASSWORD"] ?? "unknown"
-    }
-    if (ProcessInfo.processInfo.environment["PSQLDATABASE"] != nil) {
-        psqldatabase = ProcessInfo.processInfo.environment["PSQLDATABASE"] ?? "unknown"
-    }
-    let psqlConfig = PostgreSQLDatabaseConfig(hostname: psqlhost!,
+    let psqluser = ProcessInfo.processInfo.environment["PSQLUSERNAME"] ?? "unknown"
+    let psqlpassword = ProcessInfo.processInfo.environment["PSQLPASSWORD"] ?? "unknown"
+    let psqldatabase = ProcessInfo.processInfo.environment["PSQLDATABASE"] ?? "unknown"
+    let psqlConfig = PostgreSQLDatabaseConfig(hostname: psqlhost,
                                               port: psqlport!,
-                                              username: psqluser! ,
-                                              database: psqldatabase!,
-                                              password: psqlpassword!
+                                              username: psqluser ,
+                                              database: psqldatabase,
+                                              password: psqlpassword
                                              )
 
 //    services.register(psqlConfig)

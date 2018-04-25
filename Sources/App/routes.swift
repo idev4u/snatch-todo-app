@@ -13,7 +13,6 @@ public func routes(_ router: Router) throws {
     router.get("/todos") { req in
         return Todo.query(on: req).all()
     }
-    // Example of configuring a controller
     let todoController = TodoController()
     router.post("/todos/task/add/", use: todoController.create)
     router.put("/todos/task/check-off", use: todoController.update)
