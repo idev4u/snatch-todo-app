@@ -19,7 +19,7 @@ public func configure(
     let host = ProcessInfo.processInfo.environment["VCAP_APP_HOST"] ?? "0.0.0.0"
     let port = ProcessInfo.processInfo.environment["PORT"] ?? "8080"
     
-    let server = EngineServerConfig.default(hostname: host, port: Int(port)!)
+    let server = NIOServerConfig.default(hostname: host, port: Int(port)!)
     services.register(server)
     
     /// Register routes to the router
@@ -29,7 +29,7 @@ public func configure(
 
     /// Register middleware
     var middlewares = MiddlewareConfig() // Create _empty_ middleware config
-    middlewares.use(DateMiddleware.self) // Adds `Date` header to responses
+//    middlewares.use(DateMiddleware.self) // Adds `Date` header to responses
     middlewares.use(ErrorMiddleware.self) // Catches errors and converts to HTTP response
     services.register(middlewares)
     
@@ -55,7 +55,7 @@ public func configure(
 
 //    services.register(psqlConfig)
     let psql = PostgreSQLDatabase(config: psqlConfig)
-    var databases = DatabaseConfig()
+    var databases = DatabasesConfig()
     databases.add(database: psql, as: .psql)
     services.register(databases)
     
