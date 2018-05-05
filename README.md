@@ -1,7 +1,7 @@
-# Snatch Todo Backend  
+# Snatch Todo Backend
 
 ## Goal
-This example "*todo backend*" should help me to demo the **swift runtime** for cloud foundry. I would like show the latest stuff for swift, that's the reason why I choose **vapor 3** with **swift NIO**. 
+This example "*todo backend*" should help me to demo the **swift runtime** for cloud foundry. I would like show the latest stuff for swift, that's the reason why I choose **vapor 3** with **swift NIO**.
 
 ## Run it on your local machine
 ### Prerequisite
@@ -50,7 +50,7 @@ Server starting on http://0.0.0.0:8080
 
 Add a todo task
 
-/todos/task/add  
+/todos/task/add
 payload
 ```json
 {
@@ -69,7 +69,7 @@ Response
 
 ```
 
-/todos/task/check-off  
+/todos/task/check-off
 Payload
 ```json
 {
@@ -116,11 +116,11 @@ bash$ cf set-env snatch-todos PSQLPASSWORD "*****"
 ```
 ### Deploy in cf
 
-This is the custom command to deploy vapor 3 to cloudfoundry, the build pack is necessary, because we need definitely swift 4.1! 
-!! Be sure that you are connected to your cloud foundry 
+This is the custom command to deploy vapor 3 to cloudfoundry
+!! Be sure that you are connected to your cloud foundry.
 
 ```shell
-bash$ cf push snatch-todos 32M -c Run -b https://github.com/IBM-Swift/swift-buildpack/releases/download/2.0.11/buildpack_swift_v2.0.11-20180402-2018.zip
+bash$ cf push snatch-todos 32M -c Run
 ```
 
 Verify after the deploy (I had deployed in london)
