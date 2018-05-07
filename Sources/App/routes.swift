@@ -17,5 +17,28 @@ public func routes(_ router: Router) throws {
     router.post("/todos/task/add/", use: todoController.create)
     router.put("/todos/task/check-off", use: todoController.update)
     router.delete("/todos/task/delete/", Todo.parameter, use: todoController.delete)
+    
+    router.get("/todos/taks/list/open") { req -> Future<String> in
+        return req.withPooledConnection(to: .psql) { conn in
+            return conn.query("select task from todos where status = false;").map(to: String.self) { rows in
+                let logger = try req.make(Logger.self)
+                logger.info("Logger created!")
+                var result = [String]()
+                for row in rows {
+                    logger.info("\(row)")
+                    result.append(try row.firstValue(forColumn: "task")?.decode(String.self) ?? "n/a")
+                }
+                return result.description
+            }
+        }
+    }
+    
+    router.get("psql-version") { req -> Future<String> in
+        return req.withPooledConnection(to: .psql) { conn in
+            return conn.query("select version() as v;").map(to: String.self) { rows in
+                return try rows[0].firstValue(forColumn: "v")?.decode(String.self) ?? "n/a"
+            }
+        }
+    }
 }
 
