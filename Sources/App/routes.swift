@@ -18,3 +18,4 @@ public func routes(_ router: Router) throws {
     router.put("/todos/task/check-off", use: todoController.update)
     router.delete("/todos/task/delete/", Todo.parameter, use: todoController.delete)
 }
+
