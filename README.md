@@ -55,7 +55,7 @@ payload
 ```json
 {
   "task":"my first todo",
-  "status":false
+  "status":false,
   "deadline":"31.10.2020"
 }
 ```
@@ -74,7 +74,7 @@ Payload
 {
   "id":1,
   "task":"my first todo",
-  "status":true
+  "status":true,
   "deadline":"31.10.2020"
 }
 ```
