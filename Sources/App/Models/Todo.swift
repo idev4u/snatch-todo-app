@@ -10,6 +10,8 @@ final class Todo: PostgreSQLModel {
     var task: String
     
     var status: Bool
+    
+    var deadline: Date?
 
     /// Creates a new `Todo`.
     init(id: Int? = nil, task: String, status: Bool) {

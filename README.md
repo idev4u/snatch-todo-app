@@ -54,19 +54,18 @@ Add a todo task
 payload
 ```json
 {
-  "id":1,
   "task":"my first todo",
   "status":false
+  "deadline": "31.10.2020"
 }
-````
+```
 Example call to create a new task on the todo list
 ```
-bash$ curl -X POST  http://localhost:8080/todos/task/add -d '{ "task" : "your todo task", "status": false }' -H 'Content-Type: application/json'
+bash$ curl -X POST  http://localhost:8080/todos/task/add -d '{ "task" : "your todo task", "status": false, "deadline": "31.10.2020" }' -H 'Content-Type: application/json'
 ```
 Response
 ```
-{"id":3,"task":"your todo task","status":false}
-
+{"id":3,"task":"your todo task","status":false, "deadline":"2020-10-30T23:00:00Z"}
 ```
 
 /todos/task/check-off
@@ -76,17 +75,18 @@ Payload
   "id":1,
   "task":"my first todo",
   "status":true
+  "deadline": "31.10.2020"
 }
 ````
 
 Example call to check-off a task on the todo list
 ```
-bash$ curl -X PUT  http://localhost:8080/todos/task/check-off -d '{"id":1,"task":"my first todo","status":true}' -H 'Content-Type: application/json'
+bash$ curl -X PUT  http://localhost:8080/todos/task/check-off -d '{"id":1, "task":"my first todo", "status":true, "deadline": "31.10.2020"}' -H 'Content-Type: application/json'
 ```
 
 Response
 ```
-{"id":1,"task":"my first todo","status":true}
+{"id":1,"task":"my first todo","status":true, "deadline":"2020-10-30T23:00:00Z"}
 ```
 
 /todos/task/delete/:id
@@ -134,9 +134,28 @@ bash$ curl -iv -X POST  http://snatch-todos.eu-gb.mybluemix.net/todos/task/add \
 ```
 ```shell
 bash$ curl -iv -X PUT  http://snatch-todos.eu-gb.mybluemix.net/todos/task/check-off \
--d '{"id":1,"task":"my first todo","status":true}' \
+-d '{"id":1,"task":"my first todo","status":true }' \
 -H 'Content-Type: application/json'
 ```
 ```shell
 bash$ curl -iv -X DELETE  http://snatch-todos.eu-gb.mybluemix.net/todos/task/delete/11
+```
+
+## Troubleshooting db
+
+### Restore
+Issue:
+if you import some test data with squence id which is bigger then the current one, you get a error 'duplicate key' 
+
+Solution:
+
+change the sequence min value or start value
+
+```
+ALTER SEQUENCE "Todo_id_seq" RESTART WITH 15;
+```
+
+get the current min value
+```
+SELECT max(id)+1 FROM "public"."Todo" 
 ```
