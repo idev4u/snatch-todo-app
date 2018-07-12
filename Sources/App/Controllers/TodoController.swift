@@ -12,7 +12,10 @@ final class TodoController {
 
     /// Returns a list of all `Todo`s.
     func index(_ req: Request) throws -> Future<[Todo]> {
-        return Todo.query(on: req).all()
+        let query = Todo.query(on: req)
+        let result = query.all()
+        print(result)
+        return result
     }
 
     /// Saves a decoded `Todo` to the database.

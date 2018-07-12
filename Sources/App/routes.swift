@@ -14,10 +14,9 @@ public func routes(_ router: Router) throws {
     router.get("/") { req in
         return "this is the snatch todos service list all todo items use /todos"
     }
-    router.get("/todos") { req in
-        return Todo.query(on: req).all()
-    }
+    
     let todoController = TodoController()
+    router.get("/todos", use: todoController.index)
     router.post("/todos/task/add/", use: todoController.create)
     router.put("/todos/task/check-off", use: todoController.update)
     router.delete("/todos/task/delete/", Todo.parameter, use: todoController.delete)
