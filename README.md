@@ -65,7 +65,7 @@ bash$ curl -X POST  http://localhost:8080/todos/task/add -d '{ "task":"your todo
 ```
 Response
 ```
-{"id":3,"task":"your todo task","status":false,"deadline":"2020-10-30T23:00:00Z"}
+{"id":3,"task":"your todo task","status":false,"deadline":"2020-10-30"}
 ```
 
 /todos/task/check-off
@@ -86,7 +86,7 @@ bash$ curl -X PUT  http://localhost:8080/todos/task/check-off -d '{"id":1, "task
 
 Response
 ```
-{"id":1,"task":"my first todo","status":true,"deadline":"2020-10-30T23:00:00Z"}
+{"id":1,"task":"my first todo","status":true,"deadline":"2020-10-30"}
 ```
 
 /todos/task/delete/:id
