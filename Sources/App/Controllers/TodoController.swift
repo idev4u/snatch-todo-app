@@ -6,16 +6,12 @@ final class TodoController {
     let dateFormatter = DateFormatter()
     
     init(){
-        dateFormatter.locale = Locale(identifier: "de_DE")
         dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy")
     }
 
     /// Returns a list of all `Todo`s.
     func index(_ req: Request) throws -> Future<[Todo]> {
-        let query = Todo.query(on: req)
-        let result = query.all()
-        print(result)
-        return result
+        return Todo.query(on: req).all()
     }
 
     /// Saves a decoded `Todo` to the database.
