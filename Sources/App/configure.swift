@@ -63,4 +63,19 @@ public func configure(
     var migrations = MigrationConfig()
     migrations.add(model: Todo.self, database: .psql)
     services.register(migrations)
+    
+    /// Create custom JSON encoder to provide a custom date format
+    var contentConfig = ContentConfig.default()
+    let dateFormatter = DateFormatter()
+    
+    dateFormatter.locale = Locale(identifier: "de_DE")
+    dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy")
+
+    /// Create custom JSON encoder
+    let jsonEncoder = JSONEncoder()
+    jsonEncoder.dateEncodingStrategy = .formatted(dateFormatter)
+    
+    /// Register JSON encoder and content config
+    contentConfig.use(encoder: jsonEncoder, for: .json)
+    services.register(contentConfig)
 }
