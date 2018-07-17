@@ -1,7 +1,7 @@
-
 import Routing
 import Vapor
 import Fluent
+import Leaf
 
 
 
@@ -9,6 +9,9 @@ import Fluent
 ///
 /// [Learn More →](https://docs.vapor.codes/3.0/getting-started/structure/#routesswift)
 public func routes(_ router: Router) throws {
+    
+   
+    
     setbuf(stdout, nil)
     // Basic "Hello, world!" example
     router.get("/") { req in
@@ -25,5 +28,13 @@ public func routes(_ router: Router) throws {
         return req.withNewConnection(to: .psql) { db -> Future<[Todo]> in
             return Todo.query(on: req).filter(\Todo.status == true).all()
         }
+    }
+    // Add temporally a the web view
+    router.get("/alltodos") { req -> Future<View> in
+        let renderer = try req.make(LeafRenderer.self)
+
+        let context = ["tasks": try todoController.index(req)]
+        print("context : \(context)")
+        return renderer.render("alltodos",context)
     }
 }

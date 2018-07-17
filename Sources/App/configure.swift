@@ -1,5 +1,6 @@
 import FluentPostgreSQL
 import Vapor
+import Leaf
 
 /// Other services....
 
@@ -77,5 +78,9 @@ public func configure(
     
     /// Register JSON encoder and content config
     contentConfig.use(encoder: jsonEncoder, for: .json)
+//    contentConfig.use(encoder: jsonEncoder, for: .html)
     services.register(contentConfig)
+    
+    // Add Leaf Template Provider
+    try services.register(LeafProvider())
 }
