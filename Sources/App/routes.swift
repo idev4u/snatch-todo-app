@@ -4,12 +4,22 @@ import Fluent
 import Leaf
 
 
+struct TodoView : Codable {
+    var id: Int?
+    
+    /// A title describing what this `Todo` entails.
+    var task: String
+    
+    var status: Bool
+    
+    var deadline: String?
+    
+}
 
 /// Register your application's routes here.
 ///
 /// [Learn More →](https://docs.vapor.codes/3.0/getting-started/structure/#routesswift)
 public func routes(_ router: Router) throws {
-    
    
     
     setbuf(stdout, nil)
@@ -32,9 +42,21 @@ public func routes(_ router: Router) throws {
     // Add temporally a the web view
     router.get("/alltodos") { req -> Future<View> in
         let renderer = try req.make(LeafRenderer.self)
-
-        let context = ["tasks": try todoController.index(req)]
-        print("context : \(context)")
+        let client = try req.make(Client.self)
+        let dateFormatter = DateFormatter()
+        dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy")
+        let res: Future<Response> = client.get("http://localhost:8080/todos")
+        // Transforms the `Future<Response>` to `Future<ExampleData>`
+        let allTodos = res.flatMap { res -> EventLoopFuture<[TodoView]> in
+            return try res.content.decode([TodoView].self)
+        }
+//        let allTodos = res.map { todos -> Future<TodoView> in
+//           print("body: \(todos.content)")
+//            print(try todos.content.decode(TodoView.self))
+//            let aListOfTodos = try todos.content.decode(TodoView.self)
+//            return aListOfTodos
+//        }
+        let context = ["tasks": allTodos]
         return renderer.render("alltodos",context)
     }
 }
