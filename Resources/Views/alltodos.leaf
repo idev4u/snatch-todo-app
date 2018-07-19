@@ -29,7 +29,7 @@
     <h3>All my tasks</h3>
     <div class="list-group">
         #for(task in tasks){
-            #if(task.status == "false") {
+            #if(task.status == "true") {
              <a href="#" class="list-group-item disabled">#(task.task)&nbsp;#(task.deadline)</a>
             } else {
              <a href="#" class="list-group-item">#(task.task)&nbsp;#(task.deadline)</a>
