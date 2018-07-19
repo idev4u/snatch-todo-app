@@ -42,11 +42,11 @@ public func routes(_ router: Router) throws {
     // Add temporally a the web view
     router.get("/alltodos") { req -> Future<View> in
         let renderer = try req.make(LeafRenderer.self)
+        // create a new vapor client
         let client = try req.make(Client.self)
-        let dateFormatter = DateFormatter()
-        dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy")
         let res: Future<Response> = client.get("http://localhost:8080/todos")
-        // Transforms the `Future<Response>` to `Future<ExampleData>`
+        
+        // Transforms the `Future<Response>` to `Future<[TodoView]>`
         let allTodos = res.flatMap { res -> EventLoopFuture<[TodoView]> in
             return try res.content.decode([TodoView].self)
         }
@@ -56,6 +56,7 @@ public func routes(_ router: Router) throws {
 //            let aListOfTodos = try todos.content.decode(TodoView.self)
 //            return aListOfTodos
 //        }
+        // create data source for the Leaf Renderer
         let context = ["tasks": allTodos]
         return renderer.render("alltodos",context)
     }
