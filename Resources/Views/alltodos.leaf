@@ -33,16 +33,16 @@
             <a href="#" class="list-group-item disabled">
                 <!-- Default checked disabled -->
                 <!-- https://mdbootstrap.com/components/bootstrap-checkbox/ -->
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="defaultCheckedDisabled2" checked disabled>
-                    <label class="custom-control-label" for="defaultCheckedDisabled2">#(task.task)&nbsp;#(task.deadline)</label>
+                <div>
+                    <input type="checkbox" id="defaultCheckedDisabled" checked disabled>
+                    <label for="defaultCheckedDisabled">#(task.task)&nbsp;#(task.deadline)</label>
                 </div>
             </a>
             } else {
              <a href="#" class="list-group-item">
-              <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
-                    <label class="custom-control-label" for="defaultUnchecked">#(task.task)&nbsp;#(task.deadline)</label>
+              <div>
+                    <input type="checkbox" id="defaultUnchecked">
+                    <label for="defaultUnchecked">#(task.task)&nbsp;#(task.deadline)</label>
              </div>
              </a>
             }
